@@ -9,7 +9,9 @@ class AppRunner
   attr_reader :path, :command
   
   def run!
-    ip = get_database_ip(cluster_tag)
+    fork do
+      exec("cd #{path} && DATABASE_URI=#{primary_database_server.public_ip} #{command}")
+    end
   end
   
   def cluster_tag
@@ -17,9 +19,20 @@ class AppRunner
     tags.find { |tag| tag['cluster-'] }
   end
   
-private
+  def servers_in_cluster
+    @_servers_in_cluster ||= $client.droplets.all(tag_name: cluster_tag)
+  end
   
-  def get_database_ip(tag)
-    $log.info("Cluster Tag: #{tag}")
+  def database_servers
+    servers_in_cluster.select { |server|
+      server.name['db']
+      server
+    }
+  end
+  
+  def primary_database_server
+    database_servers.find { |server|
+      server.name['01']
+    }
   end
 end
