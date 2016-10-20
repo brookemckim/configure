@@ -15,11 +15,11 @@ $api_key          = ENV['API_KEY']
 application_repo = ENV['APPLICATION_REPO']
 
 server_type = case
-  when hostname[/app/]
+  when $hostname[/app/]
     'app'
-  when hostname[/db/]
+  when $hostname[/db/]
     'db'
-  when hostname[/lb/]
+  when $hostname[/lb/]
     'loadbalancer'
   else
     $log.error("Invalid hostname")
