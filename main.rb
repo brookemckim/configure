@@ -4,6 +4,10 @@ require "logger"
 
 log = Logger.new("/tmp/configure.log")
 
+File.readlines("/etc/environment").each do |line|
+  key, value = line.chomp.split "="
+  ENV[key] = value
+end
 
 hostname = `hostname`.strip
 api_key  = ENV['API_KEY']
