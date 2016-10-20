@@ -1,6 +1,6 @@
 module Installer
   class Parse
-    def new(role, application_repo)
+    def initialize(role, application_repo)
       @role = role
       @application_repo = application_repo
     end
