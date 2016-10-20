@@ -3,15 +3,15 @@
 require "logger"
 require_relative "parse"
 
-log = Logger.new("/tmp/configure.log")
+$log = Logger.new("/tmp/configure.log")
 
 File.readlines("/etc/environment").each do |line|
   key, value = line.chomp.split "="
   ENV[key] = value
 end
 
-hostname         = `hostname`.strip
-api_key          = ENV['API_KEY']
+$hostname         = `hostname`.strip
+$api_key          = ENV['API_KEY']
 application_repo = ENV['APPLICATION_REPO']
 
 server_type = case
@@ -22,7 +22,7 @@ server_type = case
   when hostname[/lb/]
     'loadbalancer'
   else
-    log.error("Invalid hostname")
+    $log.error("Invalid hostname")
   end
   
 application_type = case ENV['APPLICATION']
@@ -32,7 +32,7 @@ application_type = case ENV['APPLICATION']
     log.error("Unknown Application")
   end
   
-log.info("#{server_type} #{application_type}")
+$log.info("#{server_type} #{application_type}")
 
 
 if application_type == 'parse'
