@@ -1,11 +1,14 @@
+require_relative 'app_runner'
+
 module Installer
   class Parse
     def initialize(role, application_repo)
-      @role = role
-      @application_repo = application_repo
+      @role               = role
+      @application_repo   = application_repo
+      @application_folder = "/opt/" + application_repo.split("/").last
     end
     
-    attr_reader :role, :application_repo
+    attr_reader :role, :application_repo, :application_folder
     
     def configure!
       if role == 'db'
@@ -34,8 +37,14 @@ module Installer
     
     def setup_app
       if application_repo
-        system("git clone #{application_repo}")
+        application_folder = application.repo.split("/").last
+        system("cd /opt && git clone #{application_repo}")
+        system("cd #{application_folder} && npm install")
       end
+    end
+    
+    def run_app
+      AppRunner.new(application_folder, "npm start").start!
     end
   end
 end
