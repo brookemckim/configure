@@ -43,7 +43,7 @@ module Installer
     end
     
     def run_app
-      AppRunner.new(application_folder, "npm start").start!
+      AppRunner.new(application_folder, "npm start").run!
     end
   end
 end
