@@ -37,7 +37,6 @@ module Installer
     
     def setup_app
       if application_repo
-        application_folder = application.repo.split("/").last
         system("cd /opt && git clone #{application_repo}")
         system("cd #{application_folder} && npm install")
       end
