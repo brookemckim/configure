@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "logger"
+require_relative "parse"
 
 log = Logger.new("/tmp/configure.log")
 
@@ -31,4 +32,9 @@ application_type = case ENV['APPLICATION']
   end
   
 log.info("#{server_type} #{application_type}")
-   
+
+if application_type == 'parse'
+  Installer::Parse.run!
+else
+  # noop
+end
