@@ -36,7 +36,7 @@ log.info("#{server_type} #{application_type}")
 
 
 if application_type == 'parse'
-  Installer::Parse.new(server_type, application_repo)
+  Installer::Parse.new(server_type, application_repo).configure!
 else
   # noop
 end
