@@ -10,9 +10,11 @@ File.readlines("/etc/environment").each do |line|
   ENV[key] = value
 end
 
+api_key           = ENV['API_KEY']
+application_repo  = ENV['APPLICATION_REPO']
+
 $hostname         = `hostname`.strip
-$api_key          = ENV['API_KEY']
-application_repo = ENV['APPLICATION_REPO']
+$client           = DropletKit::Client.new(access_token: api_key)
 
 server_type = case
   when $hostname[/app/]
