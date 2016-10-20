@@ -28,6 +28,7 @@ module Installer
     
     def setup_database
       system("sed -i -e 's|bindIp: 127.0.0.1|bindIp: 0.0.0.0|g' /etc/mongod.conf")
+      system("restart mongod")
     end
     
     def install_app
