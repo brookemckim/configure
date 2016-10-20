@@ -4,7 +4,9 @@ require "logger"
 
 log = Logger.new("/tmp/configure.log")
 
+
 hostname = `hostname`.strip
+api_key  = ENV['API_KEY']
 
 server_type = case
   when hostname[/app/]
@@ -14,14 +16,14 @@ server_type = case
   when hostname[/lb/]
     'loadbalancer'
   else
-    raise StandardError, "Invalid hostname"
+    log.error("Invalid hostname")
   end
   
-application_type = case ENV['application']
+application_type = case ENV['APPLICATION']
   when 'parse'
     'parse'
   else
-    raise StandardError, "Unknown Application"
+    log.error("Unknown Application")
   end
   
 log.info("#{server_type} #{application_type}")
