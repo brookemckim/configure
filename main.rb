@@ -10,8 +10,9 @@ File.readlines("/etc/environment").each do |line|
   ENV[key] = value
 end
 
-hostname = `hostname`.strip
-api_key  = ENV['API_KEY']
+hostname         = `hostname`.strip
+api_key          = ENV['API_KEY']
+application_repo = ENV['APPLICATION_REPO']
 
 server_type = case
   when hostname[/app/]
@@ -33,8 +34,9 @@ application_type = case ENV['APPLICATION']
   
 log.info("#{server_type} #{application_type}")
 
+
 if application_type == 'parse'
-  Installer::Parse.run!(server_type)
+  Installer::Parse.new(server_type, application_repo)
 else
   # noop
 end
