@@ -8,7 +8,7 @@ module Installer
     attr_reader :role, :application_repo
     
     def configure!
-      if role == 'database'
+      if role == 'db'
         configure_database
       elsif role == 'app'
         configure_app
