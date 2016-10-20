@@ -34,7 +34,7 @@ application_type = case ENV['APPLICATION']
 log.info("#{server_type} #{application_type}")
 
 if application_type == 'parse'
-  Installer::Parse.run!
+  Installer::Parse.run!(server_type)
 else
   # noop
 end
