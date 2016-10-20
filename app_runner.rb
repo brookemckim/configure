@@ -26,7 +26,6 @@ class AppRunner
   def database_servers
     servers_in_cluster.select { |server|
       server.name['db']
-      server
     }
   end
   
